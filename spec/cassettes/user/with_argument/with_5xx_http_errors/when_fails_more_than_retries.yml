@@ -2,59 +2,76 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.twitch.tv/kraken/users/44322889
+    uri: https://id.twitch.tv/oauth2/validate
     body:
       encoding: US-ASCII
       string: ''
     headers:
-      Accept:
-      - application/vnd.twitchtv.v5+json
       User-Agent:
       - Faraday v1.3.0
-      Client-ID:
-      - "<CLIENT_ID>"
       Authorization:
       - OAuth <ACTUAL_ACCESS_TOKEN>
   response:
     status:
-      code: 503
-      message: OK
+      code: 401
+      message: Unauthorized
     headers:
+      date:
+      - Tue, 22 Jun 2021 08:36:49 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '48'
       connection:
       - keep-alive
-      content-length:
-      - '303'
-      content-type:
-      - application/json; charset=utf-8
+      server:
+      - nginx/1.18.0
       access-control-allow-origin:
       - "*"
-      cache-control:
-      - no-cache, no-store, must-revalidate, private
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      timing-allow-origin:
-      - https://www.twitch.tv
-      date:
-      - Tue, 22 Jun 2021 08:22:16 GMT
-      x-served-by:
-      - cache-sea4443-SEA, cache-bma1676-BMA
-      x-cache:
-      - MISS, MISS
-      x-cache-hits:
-      - 0, 0
-      x-timer:
-      - S1624350136.458606,VS0,VS0,VE170
-      vary:
-      - Accept-Encoding
-      strict-transport-security:
-      - max-age=300
+      x-ctxlog-logid:
+      - 1-60d1a121-7e9d4d32110fc4d2643a1f0b
     body:
       encoding: UTF-8
-      string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
-        interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:16 GMT
+      string: '{"status":401,"message":"invalid access token"}
+
+        '
+  recorded_at: Tue, 22 Jun 2021 08:36:49 GMT
+- request:
+    method: post
+    uri: https://id.twitch.tv/oauth2/token
+    body:
+      encoding: UTF-8
+      string: '{"client_id":"<CLIENT_ID>","client_secret":"<CLIENT_SECRET>","grant_type":"refresh_token","refresh_token":"<REFRESH_TOKEN>"}'
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 22 Jun 2021 08:36:50 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '344'
+      connection:
+      - keep-alive
+      server:
+      - nginx/1.18.0
+      access-control-allow-origin:
+      - "*"
+      x-ctxlog-logid:
+      - 1-60d1a122-714d63a100ce2f22629266cc
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"<ACCESS_TOKEN>","expires_in":15677,"refresh_token":"<REFRESH_TOKEN>","scope":["bits:read","channel:moderate","channel_commercial","channel_editor","channel_read","channel_stream","chat:edit","chat:read","user:read:email","user_blocks_edit","user_read"],"token_type":"bearer"}
+
+        '
+  recorded_at: Tue, 22 Jun 2021 08:36:50 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -69,7 +86,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -92,15 +109,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:16 GMT
+      - Tue, 22 Jun 2021 08:36:51 GMT
       x-served-by:
-      - cache-sea4450-SEA, cache-bma1661-BMA
+      - cache-sea4450-SEA, cache-bma1633-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350137.730252,VS0,VS0,VE166
+      - S1624351011.850525,VS0,VS0,VE165
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -109,7 +126,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:16 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:51 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -124,7 +141,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -147,15 +164,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:17 GMT
+      - Tue, 22 Jun 2021 08:36:51 GMT
       x-served-by:
-      - cache-sea4465-SEA, cache-bma1682-BMA
+      - cache-sea4447-SEA, cache-bma1667-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350137.995087,VS0,VS0,VE164
+      - S1624351011.131160,VS0,VS0,VE165
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -164,7 +181,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:17 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:51 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -179,7 +196,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -202,15 +219,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:17 GMT
+      - Tue, 22 Jun 2021 08:36:51 GMT
       x-served-by:
-      - cache-sea4480-SEA, cache-bma1623-BMA
+      - cache-sea4437-SEA, cache-bma1676-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350137.262076,VS0,VS0,VE164
+      - S1624351011.393462,VS0,VS0,VE161
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -219,7 +236,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:17 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:51 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -234,7 +251,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -257,15 +274,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:17 GMT
+      - Tue, 22 Jun 2021 08:36:51 GMT
       x-served-by:
-      - cache-sea4431-SEA, cache-bma1632-BMA
+      - cache-sea4449-SEA, cache-bma1670-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350138.533431,VS0,VS0,VE164
+      - S1624351012.653340,VS0,VS0,VE171
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -274,7 +291,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:17 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:51 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -289,7 +306,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -312,15 +329,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:17 GMT
+      - Tue, 22 Jun 2021 08:36:52 GMT
       x-served-by:
-      - cache-sea4461-SEA, cache-bma1632-BMA
+      - cache-sea4454-SEA, cache-bma1661-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350138.799714,VS0,VS0,VE166
+      - S1624351012.923162,VS0,VS0,VE172
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -329,7 +346,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:18 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:52 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -344,7 +361,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -367,15 +384,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:18 GMT
+      - Tue, 22 Jun 2021 08:36:52 GMT
       x-served-by:
-      - cache-sea4436-SEA, cache-bma1630-BMA
+      - cache-sea4431-SEA, cache-bma1681-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350138.064971,VS0,VS0,VE171
+      - S1624351012.192956,VS0,VS0,VE163
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -384,7 +401,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:18 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:52 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -399,7 +416,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -422,15 +439,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:18 GMT
+      - Tue, 22 Jun 2021 08:36:52 GMT
       x-served-by:
-      - cache-sea4466-SEA, cache-bma1633-BMA
+      - cache-sea4478-SEA, cache-bma1628-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350138.347399,VS0,VS0,VE164
+      - S1624351012.468974,VS0,VS0,VE160
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -439,7 +456,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:18 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:52 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -454,7 +471,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -477,15 +494,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:18 GMT
+      - Tue, 22 Jun 2021 08:36:52 GMT
       x-served-by:
-      - cache-sea4436-SEA, cache-bma1667-BMA
+      - cache-sea4475-SEA, cache-bma1637-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350139.609715,VS0,VS0,VE164
+      - S1624351013.734219,VS0,VS0,VE163
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -494,7 +511,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:18 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:52 GMT
 - request:
     method: get
     uri: https://api.twitch.tv/kraken/users/44322889
@@ -509,7 +526,7 @@ http_interactions:
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
-      - OAuth <ACTUAL_ACCESS_TOKEN>
+      - OAuth <NEW_ACCESS_TOKEN>
   response:
     status:
       code: 503
@@ -532,15 +549,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Tue, 22 Jun 2021 08:22:19 GMT
+      - Tue, 22 Jun 2021 08:36:53 GMT
       x-served-by:
-      - cache-sea4431-SEA, cache-bma1626-BMA
+      - cache-sea4469-SEA, cache-bma1682-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1624350139.876227,VS0,VS0,VE170
+      - S1624351013.998712,VS0,VS0,VE165
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -549,5 +566,60 @@ http_interactions:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
         interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Tue, 22 Jun 2021 08:22:19 GMT
+  recorded_at: Tue, 22 Jun 2021 08:36:53 GMT
+- request:
+    method: get
+    uri: https://api.twitch.tv/kraken/users/44322889
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.twitchtv.v5+json
+      User-Agent:
+      - Faraday v1.3.0
+      Client-ID:
+      - "<CLIENT_ID>"
+      Authorization:
+      - OAuth <NEW_ACCESS_TOKEN>
+  response:
+    status:
+      code: 503
+      message: OK
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '303'
+      content-type:
+      - application/json; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - no-cache, no-store, must-revalidate, private
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      timing-allow-origin:
+      - https://www.twitch.tv
+      date:
+      - Tue, 22 Jun 2021 08:36:53 GMT
+      x-served-by:
+      - cache-sea4471-SEA, cache-bma1627-BMA
+      x-cache:
+      - MISS, MISS
+      x-cache-hits:
+      - 0, 0
+      x-timer:
+      - S1624351013.270684,VS0,VS0,VE162
+      vary:
+      - Accept-Encoding
+      strict-transport-security:
+      - max-age=300
+    body:
+      encoding: UTF-8
+      string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
+        interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-06-22T01:25:42.652624Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
+  recorded_at: Tue, 22 Jun 2021 08:36:53 GMT
 recorded_with: VCR 6.0.0

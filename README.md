@@ -28,31 +28,39 @@ gem install twitch
 
 ## Authentication
 
-You can initialize `Twitch::Client` with or without
-`:access_token` and `:refresh_token`:
+You have to initialize `Twitch::Client` with `TwitchOAuth2::Tokens` object,
+it can be with or without `:access_token` and `:refresh_token`:
 
 ```ruby
-twitch_client = Twitch::Client.new(
-  client_id: client_id,
-  client_secret: client_secret,
-  redirect_uri: redirect_uri,
+tokens = TwitchOAuth2::Tokens.new(
+  client: {
+    client_id: client_id,
+    client_secret: client_secret,
+    redirect_uri: redirect_uri
+  },
   scopes: scopes,
+  # token_type: :user, # default is non-personal `:application`
   # access_token: access_token,
   # refresh_token: refresh_token
 )
+
+# If you need for User Access Token:
+unless access_token
+  link = tokens.authorize_link
+  puts "Please, open this link, authenticate and paste `code` query argument here:"
+  tokens.code = gets.chomp
+end
+
+# Otherwise it will raise the exception for `token_type: :user`
+twitch_client = Twitch::Client.new(
+  tokens: tokens
+)
 ```
 
-But if you want to make requests depending on `access_token`,
-you should make sure that tokens are actual:
-
-```ruby
-twitch_client.check_tokens! # old tokens if they're actual or new tokens
-```
-
-It works like authentication (with a link to login in console)
-if there were no tokens.
-
-Otherwise, `TwitchOAuth2::Error` will be raised.
+If you want to make requests depending on `access_token`,
+you should make sure that tokens are actual or you ready to authenticate,
+otherwise direct user to `tokens.authorize_link`.
+Please, read [`twitch_oauth2`](https://github.com/AlexWayfer/twitch_oauth2) documentation about it.
 
 If you've passed `refresh_token` to initialization and your `access_token`
 is invalid, requests that require `access_token` will automatically refresh it.
@@ -60,9 +68,9 @@ is invalid, requests that require `access_token` will automatically refresh it.
 Later you can access tokens:
 
 ```ruby
-twitch_client.tokens # => { access_token: 'abcdef', refresh_token: 'ghijkl' }
-twitch_client.access_token # => 'abcdef'
-twitch_client.refresh_token # => 'ghijkl'
+twitch_client.tokens # => `TwitchOAuth2::Tokens` instance
+twitch_client.tokens.access_token # => 'abcdef'
+twitch_client.tokens.refresh_token # => 'ghijkl'
 ```
 
 ## Calls

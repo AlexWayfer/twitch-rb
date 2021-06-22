@@ -2,6 +2,42 @@
 http_interactions:
 - request:
     method: get
+    uri: https://id.twitch.tv/oauth2/validate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Authorization:
+      - OAuth <ACTUAL_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sun, 21 Mar 2021 16:16:07 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '302'
+      connection:
+      - keep-alive
+      server:
+      - nginx/1.18.0
+      access-control-allow-origin:
+      - "*"
+      x-ctxlog-logid:
+      - 1-60577147-38db5b7d6dccef2338117509
+    body:
+      encoding: UTF-8
+      string: '{"client_id":"<CLIENT_ID>","login":"streamassistantbot","scopes":["bits:read","channel:moderate","channel_commercial","channel_editor","channel_read","channel_stream","chat:edit","chat:read","user:read:email","user_blocks_edit","user_read"],"user_id":"277558749","expires_in":13706}
+
+        '
+  recorded_at: Sun, 21 Mar 2021 16:16:07 GMT
+- request:
+    method: get
     uri: https://api.twitch.tv/kraken/users/44322889
     body:
       encoding: US-ASCII
@@ -10,7 +46,7 @@ http_interactions:
       Accept:
       - application/vnd.twitchtv.v5+json
       User-Agent:
-      - Faraday v1.1.0
+      - Faraday v1.3.0
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
@@ -37,15 +73,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Fri, 27 Nov 2020 12:51:30 GMT
+      - Sun, 21 Mar 2021 16:16:07 GMT
       x-served-by:
-      - cache-sea4441-SEA, cache-bma1624-BMA
+      - cache-sea4475-SEA, cache-bma1626-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1606481491.674427,VS0,VS0,VE164
+      - S1616343367.252544,VS0,VS0,VE164
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -53,6 +89,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"display_name":"dallas","_id":"44322889","name":"dallas","type":"user","bio":"Friendly,
-        interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2020-11-27T04:51:28.394108Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
-  recorded_at: Fri, 27 Nov 2020 12:51:30 GMT
+        interactive, and very bald.","created_at":"2013-06-03T19:12:02.580593Z","updated_at":"2021-03-21T12:10:40.374728Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/4d1f36cbf1f0072d-profile_image-300x300.png"}'
+  recorded_at: Sun, 21 Mar 2021 16:16:07 GMT
 recorded_with: VCR 6.0.0

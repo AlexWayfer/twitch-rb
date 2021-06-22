@@ -9,6 +9,7 @@ ENV['TWITCH_CLIENT_ID'] ||= ''
 ENV['TWITCH_CLIENT_SECRET'] ||= ''
 ENV['TWITCH_ACCESS_TOKEN'] ||= ''
 ENV['TWITCH_REFRESH_TOKEN'] ||= ''
+ENV['TWITCH_OUTDATED_ACCESS_TOKEN'] = '9y7bf00r4fof71czggal1e2wlo50q3'
 
 require 'vcr'
 
@@ -34,6 +35,10 @@ VCR.configure do |config|
     ENV['TWITCH_REFRESH_TOKEN']
   end
 
+  config.filter_sensitive_data('<OUTDATED_ACCESS_TOKEN>') do
+    ENV['TWITCH_OUTDATED_ACCESS_TOKEN']
+  end
+
   config.filter_sensitive_data('<CODE>') do |interaction|
     URI.decode_www_form(interaction.request.body).to_h['code']
   end
@@ -48,6 +53,19 @@ VCR.configure do |config|
     if interaction.response.headers['content-type'].include? 'application/json'
       JSON.parse(interaction.response.body)['refresh_token']
     end
+  end
+
+  config.filter_sensitive_data('<NEW_ACCESS_TOKEN>') do |interaction|
+    next unless (authorization_header = interaction.request.headers['Authorization']&.first)
+
+    access_token = authorization_header.split(' ', 2).last
+
+    next if access_token == ENV['TWITCH_ACCESS_TOKEN']
+    next if access_token == '<ACTUAL_ACCESS_TOKEN>'
+    next if access_token == '<OUTDATED_ACCESS_TOKEN>'
+    next if access_token == '<NEW_ACCESS_TOKEN>'
+
+    access_token
   end
 end
 

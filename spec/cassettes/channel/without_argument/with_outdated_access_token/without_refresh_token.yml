@@ -2,77 +2,58 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.twitch.tv/kraken/channel
+    uri: https://id.twitch.tv/oauth2/validate
     body:
       encoding: US-ASCII
       string: ''
     headers:
-      Accept:
-      - application/vnd.twitchtv.v5+json
       User-Agent:
-      - Faraday v1.0.1
-      Client-ID:
-      - "<CLIENT_ID>"
+      - Faraday v1.3.0
       Authorization:
-      - OAuth 9y7bf00r4fof71czggal1e2wlo50q3
+      - OAuth <OUTDATED_ACCESS_TOKEN>
   response:
     status:
       code: 401
       message: Unauthorized
     headers:
+      date:
+      - Sun, 21 Mar 2021 16:25:30 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '48'
       connection:
       - keep-alive
-      content-length:
-      - '69'
-      content-type:
-      - application/json; charset=utf-8
+      server:
+      - nginx/1.18.0
       access-control-allow-origin:
       - "*"
-      cache-control:
-      - no-cache, no-store, must-revalidate, private
-      expires:
-      - '0'
-      pragma:
-      - no-cache
-      timing-allow-origin:
-      - https://www.twitch.tv
-      date:
-      - Sun, 05 Apr 2020 12:57:09 GMT
-      x-served-by:
-      - cache-sea4439-SEA, cache-hel6829-HEL
-      x-cache:
-      - MISS, MISS
-      x-cache-hits:
-      - 0, 0
-      x-timer:
-      - S1586091429.441838,VS0,VS0,VE193
-      vary:
-      - Accept-Encoding
-      strict-transport-security:
-      - max-age=300
+      x-ctxlog-logid:
+      - 1-6057737a-4743b12e0010c0df1ad0d530
     body:
       encoding: UTF-8
-      string: '{"error":"Unauthorized","status":401,"message":"invalid oauth token"}'
-    http_version: null
-  recorded_at: Sun, 05 Apr 2020 12:57:09 GMT
+      string: '{"status":401,"message":"invalid access token"}
+
+        '
+  recorded_at: Sun, 21 Mar 2021 16:25:30 GMT
 - request:
     method: post
     uri: https://id.twitch.tv/oauth2/token
     body:
       encoding: UTF-8
-      string: client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>&grant_type=refresh_token&refresh_token
+      string: '{"client_id":"<CLIENT_ID>","client_secret":"<CLIENT_SECRET>","grant_type":"refresh_token","refresh_token":null}'
     headers:
       User-Agent:
-      - Faraday v1.0.1
+      - Faraday v1.3.0
       Content-Type:
-      - application/x-www-form-urlencoded
+      - application/json
   response:
     status:
       code: 400
       message: Bad Request
     headers:
       date:
-      - Sun, 05 Apr 2020 12:57:10 GMT
+      - Sun, 21 Mar 2021 16:25:31 GMT
       content-type:
       - application/json
       content-length:
@@ -80,16 +61,15 @@ http_interactions:
       connection:
       - keep-alive
       server:
-      - nginx/1.14.1
+      - nginx/1.18.0
       access-control-allow-origin:
       - "*"
       x-ctxlog-logid:
-      - 1-5e89d5a6-3f759ad476367f58ab1fa23c
+      - 1-6057737b-37544783727f1a547ba547da
     body:
       encoding: UTF-8
       string: '{"status":400,"message":"missing refresh token"}
 
         '
-    http_version: null
-  recorded_at: Sun, 05 Apr 2020 12:57:10 GMT
-recorded_with: VCR 5.1.0
+  recorded_at: Sun, 21 Mar 2021 16:25:31 GMT
+recorded_with: VCR 6.0.0

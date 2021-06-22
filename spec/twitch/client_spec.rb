@@ -3,12 +3,17 @@
 describe Twitch::Client do
   subject(:client) do
     described_class.new(
-      client_id: client_id,
-      client_secret: client_secret,
-      redirect_uri: redirect_uri,
-      scopes: scopes,
-      access_token: access_token,
-      refresh_token: refresh_token
+      tokens: TwitchOAuth2::Tokens.new(
+        client: {
+          client_id: client_id,
+          client_secret: client_secret,
+          redirect_uri: redirect_uri
+        },
+        token_type: :user,
+        scopes: scopes,
+        access_token: access_token,
+        refresh_token: refresh_token
+      )
     )
   end
 
@@ -25,19 +30,25 @@ describe Twitch::Client do
       channel_editor
       channel_commercial
       channel_stream
+      channel:moderate
       user_blocks_edit
+      chat:read
+      chat:edit
     ]
   end
   let(:scope_string) { scopes.join(' ') }
 
   let(:user_id) { ENV['TWITCH_USER_ID'] }
   let(:access_token) { ENV['TWITCH_ACCESS_TOKEN'] }
+  let(:outdated_access_token) { ENV['TWITCH_OUTDATED_ACCESS_TOKEN'] }
   let(:refresh_token) { ENV['TWITCH_REFRESH_TOKEN'] }
 
   let(:name) { a_string_matching(/^\w+$/) }
   let(:game) { String }
   let(:language) { a_string_matching(/^[a-z]{2}$/) }
   let(:locale) { a_string_matching(/^[a-z]{2}-[a-z]{2}$/) }
+
+  let(:response) { make_request }
 
   let(:expected_team) do
     {
@@ -154,12 +165,14 @@ describe Twitch::Client do
   end
 
   shared_examples 'correct behavior with actual or outdated access_token' do
+    subject { make_request }
+
     context 'with actual access_token' do
       include_examples 'correct behavior'
     end
 
     context 'with outdated access_token' do
-      let(:access_token) { '9y7bf00r4fof71czggal1e2wlo50q3' }
+      let(:access_token) { outdated_access_token }
 
       context 'with refresh_token' do
         include_examples 'correct behavior'
@@ -173,6 +186,17 @@ describe Twitch::Client do
             TwitchOAuth2::Error, 'missing refresh token'
           )
         end
+      end
+    end
+
+    context 'with actual access_token which became outdated' do
+      before do
+        make_request
+        client.connection.headers['Authorization'] = "OAuth #{outdated_access_token}"
+      end
+
+      context 'with `refresh_token`' do
+        include_examples 'correct behavior'
       end
     end
   end
@@ -308,7 +332,9 @@ describe Twitch::Client do
   end
 
   describe '#user' do
-    subject(:response) { client.user(user_id) }
+    def make_request
+      client.user(user_id)
+    end
 
     context 'with argument' do
       let(:user_id) { '44322889' }
@@ -380,7 +406,9 @@ describe Twitch::Client do
   end
 
   describe '#channel' do
-    subject(:response) { client.channel(channel_id) }
+    def make_request
+      client.channel(channel_id)
+    end
 
     context 'with argument' do
       let(:channel_id) { '44322889' }
@@ -412,7 +440,7 @@ describe Twitch::Client do
   end
 
   describe '#update_channel' do
-    subject(:response) do
+    def make_request
       client.update_channel(user_id, status: status, game: game)
     end
 
@@ -784,7 +812,9 @@ describe Twitch::Client do
   end
 
   describe '#followed_streams' do
-    subject(:response) { client.followed_streams }
+    def make_request
+      client.followed_streams
+    end
 
     shared_examples 'correct behavior' do
       include_examples 'success'
@@ -800,7 +830,9 @@ describe Twitch::Client do
   end
 
   describe '#followed_videos' do
-    subject(:response) { client.followed_videos }
+    def make_request
+      client.followed_videos
+    end
 
     shared_examples 'correct behavior' do
       include_examples 'success'

@@ -1,0 +1,237 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://id.twitch.tv/oauth2/validate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Authorization:
+      - OAuth <ACTUAL_ACCESS_TOKEN>
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      date:
+      - Thu, 01 Apr 2021 23:22:23 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '48'
+      connection:
+      - keep-alive
+      server:
+      - nginx/1.18.0
+      access-control-allow-origin:
+      - "*"
+      x-ctxlog-logid:
+      - 1-606655af-3b27c4d356ed38c534fa3f9d
+    body:
+      encoding: UTF-8
+      string: '{"status":401,"message":"invalid access token"}
+
+        '
+  recorded_at: Thu, 01 Apr 2021 23:22:23 GMT
+- request:
+    method: post
+    uri: https://id.twitch.tv/oauth2/token
+    body:
+      encoding: UTF-8
+      string: '{"client_id":"<CLIENT_ID>","client_secret":"<CLIENT_SECRET>","grant_type":"refresh_token","refresh_token":"<REFRESH_TOKEN>"}'
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 01 Apr 2021 23:22:24 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '344'
+      connection:
+      - keep-alive
+      server:
+      - nginx/1.18.0
+      access-control-allow-origin:
+      - "*"
+      x-ctxlog-logid:
+      - 1-606655af-26ba20d36c0096913246ed12
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"<ACCESS_TOKEN>","expires_in":14173,"refresh_token":"<REFRESH_TOKEN>","scope":["bits:read","channel:moderate","channel_commercial","channel_editor","channel_read","channel_stream","chat:edit","chat:read","user:read:email","user_blocks_edit","user_read"],"token_type":"bearer"}
+
+        '
+  recorded_at: Thu, 01 Apr 2021 23:22:24 GMT
+- request:
+    method: get
+    uri: https://api.twitch.tv/kraken/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.twitchtv.v5+json
+      User-Agent:
+      - Faraday v1.3.0
+      Client-ID:
+      - "<CLIENT_ID>"
+      Authorization:
+      - OAuth <NEW_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '466'
+      content-type:
+      - application/json; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - no-cache, no-store, must-revalidate, private
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      timing-allow-origin:
+      - https://www.twitch.tv
+      date:
+      - Thu, 01 Apr 2021 23:22:24 GMT
+      x-served-by:
+      - cache-sea4446-SEA, cache-bma1650-BMA
+      x-cache:
+      - MISS, MISS
+      x-cache-hits:
+      - 0, 0
+      x-timer:
+      - S1617319344.182420,VS0,VS0,VE189
+      vary:
+      - Accept-Encoding
+      strict-transport-security:
+      - max-age=300
+    body:
+      encoding: UTF-8
+      string: '{"display_name":"StreamAssistantBot","_id":"277558749","name":"streamassistantbot","type":"user","bio":null,"created_at":"2018-11-23T20:32:14.972752Z","updated_at":"2021-03-24T17:35:05.436216Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/cbde4ea7-7186-4128-866d-bba7c5c479c3-profile_image-300x300.png","email":"stream.assistant.bot@outlook.com","email_verified":true,"partnered":false,"twitter_connected":false,"notifications":{"push":true,"email":false}}'
+  recorded_at: Thu, 01 Apr 2021 23:22:24 GMT
+- request:
+    method: get
+    uri: https://api.twitch.tv/kraken/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.twitchtv.v5+json
+      User-Agent:
+      - Faraday v1.3.0
+      Client-ID:
+      - "<CLIENT_ID>"
+      Authorization:
+      - OAuth <OUTDATED_ACCESS_TOKEN>
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '69'
+      content-type:
+      - application/json; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - no-cache, no-store, must-revalidate, private
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      timing-allow-origin:
+      - https://www.twitch.tv
+      date:
+      - Thu, 01 Apr 2021 23:22:24 GMT
+      x-served-by:
+      - cache-sea4461-SEA, cache-bma1649-BMA
+      x-cache:
+      - MISS, MISS
+      x-cache-hits:
+      - 0, 0
+      x-timer:
+      - S1617319344.469789,VS0,VS0,VE178
+      vary:
+      - Accept-Encoding
+      strict-transport-security:
+      - max-age=300
+    body:
+      encoding: UTF-8
+      string: '{"error":"Unauthorized","status":401,"message":"invalid oauth token"}'
+  recorded_at: Thu, 01 Apr 2021 23:22:24 GMT
+- request:
+    method: get
+    uri: https://api.twitch.tv/kraken/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.twitchtv.v5+json
+      User-Agent:
+      - Faraday v1.3.0
+      Client-ID:
+      - "<CLIENT_ID>"
+      Authorization:
+      - OAuth <NEW_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '466'
+      content-type:
+      - application/json; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - no-cache, no-store, must-revalidate, private
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      timing-allow-origin:
+      - https://www.twitch.tv
+      date:
+      - Thu, 01 Apr 2021 23:22:24 GMT
+      x-served-by:
+      - cache-sea4461-SEA, cache-bma1628-BMA
+      x-cache:
+      - MISS, MISS
+      x-cache-hits:
+      - 0, 0
+      x-timer:
+      - S1617319345.745119,VS0,VS0,VE185
+      vary:
+      - Accept-Encoding
+      strict-transport-security:
+      - max-age=300
+    body:
+      encoding: UTF-8
+      string: '{"display_name":"StreamAssistantBot","_id":"277558749","name":"streamassistantbot","type":"user","bio":null,"created_at":"2018-11-23T20:32:14.972752Z","updated_at":"2021-03-24T17:35:05.436216Z","logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/cbde4ea7-7186-4128-866d-bba7c5c479c3-profile_image-300x300.png","email":"stream.assistant.bot@outlook.com","email_verified":true,"partnered":false,"twitter_connected":false,"notifications":{"push":true,"email":false}}'
+  recorded_at: Thu, 01 Apr 2021 23:22:24 GMT
+recorded_with: VCR 6.0.0

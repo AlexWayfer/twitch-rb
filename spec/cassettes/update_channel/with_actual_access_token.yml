@@ -1,6 +1,42 @@
 ---
 http_interactions:
 - request:
+    method: get
+    uri: https://id.twitch.tv/oauth2/validate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Authorization:
+      - OAuth <ACTUAL_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sun, 21 Mar 2021 16:16:31 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '302'
+      connection:
+      - keep-alive
+      server:
+      - nginx/1.18.0
+      access-control-allow-origin:
+      - "*"
+      x-ctxlog-logid:
+      - 1-6057715f-2b91dcc758fd7baa6283f7f4
+    body:
+      encoding: UTF-8
+      string: '{"client_id":"<CLIENT_ID>","login":"streamassistantbot","scopes":["bits:read","channel:moderate","channel_commercial","channel_editor","channel_read","channel_stream","chat:edit","chat:read","user:read:email","user_blocks_edit","user_read"],"user_id":"277558749","expires_in":13682}
+
+        '
+  recorded_at: Sun, 21 Mar 2021 16:16:31 GMT
+- request:
     method: put
     uri: https://api.twitch.tv/kraken/channels/277558749
     body:
@@ -10,7 +46,7 @@ http_interactions:
       Accept:
       - application/vnd.twitchtv.v5+json
       User-Agent:
-      - Faraday v1.0.1
+      - Faraday v1.3.0
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
@@ -25,7 +61,7 @@ http_interactions:
       connection:
       - keep-alive
       content-length:
-      - '666'
+      - '667'
       content-type:
       - application/json; charset=utf-8
       access-control-allow-origin:
@@ -39,15 +75,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Sun, 05 Apr 2020 12:57:10 GMT
+      - Sun, 21 Mar 2021 16:16:31 GMT
       x-served-by:
-      - cache-sea4442-SEA, cache-hel6832-HEL
+      - cache-sea4473-SEA, cache-bma1620-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1586091431.615103,VS0,VS0,VE222
+      - S1616343392.704618,VS0,VS0,VE198
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -55,7 +91,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"mature":false,"status":"Changing API","broadcaster_language":"en","broadcaster_software":"","display_name":"StreamAssistantBot","game":"Diablo
-        III","language":"en","_id":"277558749","name":"streamassistantbot","created_at":"2018-11-23T20:32:14Z","updated_at":"2020-04-05T09:21:53Z","partner":false,"logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/cbde4ea7-7186-4128-866d-bba7c5c479c3-profile_image-300x300.png","video_banner":null,"profile_banner":null,"profile_banner_background_color":null,"url":"https://www.twitch.tv/streamassistantbot","views":0,"followers":0,"broadcaster_type":"","description":"","private_video":false,"privacy_options_enabled":false}'
-    http_version: null
-  recorded_at: Sun, 05 Apr 2020 12:57:10 GMT
-recorded_with: VCR 5.1.0
+        III","language":"en","_id":"277558749","name":"streamassistantbot","created_at":"2018-11-23T20:32:14Z","updated_at":"2021-03-21T08:47:34Z","partner":false,"logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/cbde4ea7-7186-4128-866d-bba7c5c479c3-profile_image-300x300.png","video_banner":null,"profile_banner":null,"profile_banner_background_color":null,"url":"https://www.twitch.tv/streamassistantbot","views":11,"followers":1,"broadcaster_type":"","description":"","private_video":false,"privacy_options_enabled":false}'
+  recorded_at: Sun, 21 Mar 2021 16:16:31 GMT
+recorded_with: VCR 6.0.0

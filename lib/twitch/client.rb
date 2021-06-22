@@ -44,30 +44,13 @@ module Twitch
 
     attr_reader :connection, :tokens
 
-    def initialize(options = {})
-      @client_id = options[:client_id]
+    def initialize(tokens:, connection: DEFAULT_CONNECTION.dup)
+      @tokens = tokens
 
-      @oauth2_client = TwitchOAuth2::Client.new(
-        client_id: @client_id,
-        **options.slice(:client_secret, :redirect_uri, :scopes)
-      )
+      @connection = connection
+      self.connection.headers['Client-ID'] = tokens.client.client_id
 
-      @tokens = options.slice(:access_token, :refresh_token)
-
-      @connection = options.fetch(:connection, DEFAULT_CONNECTION.dup)
-      connection.headers['Client-ID'] = @client_id
-
-      renew_authorization_header if access_token
-    end
-
-    %i[access_token refresh_token].each do |key|
-      define_method key do
-        tokens[key]
-      end
-    end
-
-    def check_tokens!
-      @tokens = @oauth2_client.check_tokens(**tokens)
+      renew_authorization_header if self.tokens.token_type == :user
     end
 
     # User
@@ -79,9 +62,7 @@ module Twitch
     end
 
     def your_user
-      require_access_token do
-        request :get, 'user'
-      end
+      request :get, 'user'
     end
 
     def users(*logins)
@@ -107,51 +88,35 @@ module Twitch
     end
 
     def your_channel
-      require_access_token do
-        request :get, 'channel'
-      end
+      request :get, 'channel'
     end
 
     def editors(channel)
-      require_access_token do
-        request :get, "channels/#{channel}/editors"
-      end
+      request :get, "channels/#{channel}/editors"
     end
 
     def update_channel(channel_id, options)
-      require_access_token do
-        request :put, "channels/#{channel_id}", channel: options
-      end
+      request :put, "channels/#{channel_id}", channel: options
     end
 
     def reset_key(channel)
-      require_access_token do
-        request :delete, "channels/#{channel}/stream_key"
-      end
+      request :delete, "channels/#{channel}/stream_key"
     end
 
     def follow_channel(username, channel)
-      require_access_token do
-        request :put, "users/#{username}/follows/channels/#{channel}"
-      end
+      request :put, "users/#{username}/follows/channels/#{channel}"
     end
 
     def unfollow_channel(username, channel)
-      require_access_token do
-        request :delete, "users/#{username}/follows/channels/#{channel}"
-      end
+      request :delete, "users/#{username}/follows/channels/#{channel}"
     end
 
     def run_commercial(channel, length = 30)
-      require_access_token do
-        request :post, "channels/#{channel}/commercial", length: length
-      end
+      request :post, "channels/#{channel}/commercial", length: length
     end
 
     def channel_teams(channel)
-      require_access_token do
-        request :get, "channels/#{channel}/teams"
-      end
+      request :get, "channels/#{channel}/teams"
     end
 
     # Streams
@@ -173,9 +138,7 @@ module Twitch
     end
 
     def followed_streams(options = {})
-      require_access_token do
-        request :get, 'streams/followed', options
-      end
+      request :get, 'streams/followed', options
     end
     alias your_followed_streams followed_streams
 
@@ -214,9 +177,7 @@ module Twitch
     end
 
     def followed_videos(options = {})
-      require_access_token do
-        request :get, 'videos/followed', options
-      end
+      request :get, 'videos/followed', options
     end
     alias your_followed_videos followed_videos
 
@@ -231,15 +192,11 @@ module Twitch
     end
 
     def block_user(username, target)
-      require_access_token do
-        request :put, "users/#{username}/blocks/#{target}"
-      end
+      request :put, "users/#{username}/blocks/#{target}"
     end
 
     def unblock_user(username, target)
-      require_access_token do
-        request :delete, "users/#{username}/blocks/#{target}"
-      end
+      request :delete, "users/#{username}/blocks/#{target}"
     end
 
     # Chat
@@ -283,45 +240,33 @@ module Twitch
     # Subscriptions
 
     def subscribed(channel, options = {})
-      require_access_token do
-        request :get, "channels/#{channel}/subscriptions", options
-      end
+      request :get, "channels/#{channel}/subscriptions", options
     end
 
     def subscribed_to_channel(username, channel)
-      require_access_token do
-        request :get, "channels/#{channel}/subscriptions/#{username}"
-      end
+      request :get, "channels/#{channel}/subscriptions/#{username}"
     end
 
     private
 
     def renew_authorization_header
-      connection.headers['Authorization'] = "OAuth #{access_token}"
+      connection.headers['Authorization'] = "OAuth #{tokens.access_token}"
     end
 
     def request(http_method, *args)
       Retriable.with_context(:twitch) do
         response = connection.public_send http_method, *args
 
-        raise ServerError.new(response.status) if response.status.between?(500, 599)
+        raise ServerError, response.status if response.status.between?(500, 599)
+
+        if response.status == 401
+          renew_authorization_header
+
+          response = connection.public_send http_method, *args
+        end
 
         response
       end
-    end
-
-    def require_access_token
-      response = yield
-      if response.success? ||
-          response.status != 401 ||
-          ## Here can be another error, like "missing required oauth scope"
-          response.body[:message] != 'invalid oauth token'
-        return response
-      end
-
-      @tokens = @oauth2_client.refreshed_tokens(refresh_token: refresh_token)
-      renew_authorization_header
-      yield
     end
   end
 end

@@ -2,6 +2,42 @@
 http_interactions:
 - request:
     method: get
+    uri: https://id.twitch.tv/oauth2/validate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Authorization:
+      - OAuth <ACTUAL_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sun, 21 Mar 2021 16:16:51 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '302'
+      connection:
+      - keep-alive
+      server:
+      - nginx/1.18.0
+      access-control-allow-origin:
+      - "*"
+      x-ctxlog-logid:
+      - 1-60577173-6ada04e77af0723d753f272e
+    body:
+      encoding: UTF-8
+      string: '{"client_id":"<CLIENT_ID>","login":"streamassistantbot","scopes":["bits:read","channel:moderate","channel_commercial","channel_editor","channel_read","channel_stream","chat:edit","chat:read","user:read:email","user_blocks_edit","user_read"],"user_id":"277558749","expires_in":13662}
+
+        '
+  recorded_at: Sun, 21 Mar 2021 16:16:51 GMT
+- request:
+    method: get
     uri: https://api.twitch.tv/kraken/users/44322889/follows/channels/129454141
     body:
       encoding: US-ASCII
@@ -10,7 +46,7 @@ http_interactions:
       Accept:
       - application/vnd.twitchtv.v5+json
       User-Agent:
-      - Faraday v1.0.1
+      - Faraday v1.3.0
       Client-ID:
       - "<CLIENT_ID>"
       Authorization:
@@ -37,15 +73,15 @@ http_interactions:
       timing-allow-origin:
       - https://www.twitch.tv
       date:
-      - Sun, 05 Apr 2020 12:57:18 GMT
+      - Sun, 21 Mar 2021 16:16:51 GMT
       x-served-by:
-      - cache-sea4454-SEA, cache-hel6830-HEL
+      - cache-sea4449-SEA, cache-bma1625-BMA
       x-cache:
       - MISS, MISS
       x-cache-hits:
       - 0, 0
       x-timer:
-      - S1586091438.921432,VS0,VS0,VE200
+      - S1616343411.443597,VS0,VS0,VE179
       vary:
       - Accept-Encoding
       strict-transport-security:
@@ -53,6 +89,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":"Not Found","status":404,"message":"Follow not found"}'
-    http_version: null
-  recorded_at: Sun, 05 Apr 2020 12:57:18 GMT
-recorded_with: VCR 5.1.0
+  recorded_at: Sun, 21 Mar 2021 16:16:51 GMT
+recorded_with: VCR 6.0.0

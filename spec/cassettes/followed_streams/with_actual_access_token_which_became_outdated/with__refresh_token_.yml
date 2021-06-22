@@ -1,0 +1,241 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://id.twitch.tv/oauth2/validate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Authorization:
+      - OAuth <ACTUAL_ACCESS_TOKEN>
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      date:
+      - Thu, 01 Apr 2021 23:22:31 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '48'
+      connection:
+      - keep-alive
+      server:
+      - nginx/1.18.0
+      access-control-allow-origin:
+      - "*"
+      x-ctxlog-logid:
+      - 1-606655b7-22547c89768d09820ac67f6e
+    body:
+      encoding: UTF-8
+      string: '{"status":401,"message":"invalid access token"}
+
+        '
+  recorded_at: Thu, 01 Apr 2021 23:22:31 GMT
+- request:
+    method: post
+    uri: https://id.twitch.tv/oauth2/token
+    body:
+      encoding: UTF-8
+      string: '{"client_id":"<CLIENT_ID>","client_secret":"<CLIENT_SECRET>","grant_type":"refresh_token","refresh_token":"<REFRESH_TOKEN>"}'
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 01 Apr 2021 23:22:32 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '344'
+      connection:
+      - keep-alive
+      server:
+      - nginx/1.18.0
+      access-control-allow-origin:
+      - "*"
+      x-ctxlog-logid:
+      - 1-606655b7-052c260509ba56485c87bc33
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"<ACCESS_TOKEN>","expires_in":13790,"refresh_token":"<REFRESH_TOKEN>","scope":["bits:read","channel:moderate","channel_commercial","channel_editor","channel_read","channel_stream","chat:edit","chat:read","user:read:email","user_blocks_edit","user_read"],"token_type":"bearer"}
+
+        '
+  recorded_at: Thu, 01 Apr 2021 23:22:32 GMT
+- request:
+    method: get
+    uri: https://api.twitch.tv/kraken/streams/followed
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.twitchtv.v5+json
+      User-Agent:
+      - Faraday v1.3.0
+      Client-ID:
+      - "<CLIENT_ID>"
+      Authorization:
+      - OAuth <NEW_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '800'
+      content-type:
+      - application/json; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - no-cache, no-store, must-revalidate, private
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      timing-allow-origin:
+      - https://www.twitch.tv
+      date:
+      - Thu, 01 Apr 2021 23:22:32 GMT
+      x-served-by:
+      - cache-sea4420-SEA, cache-bma1628-BMA
+      x-cache:
+      - MISS, MISS
+      x-cache-hits:
+      - 0, 0
+      x-timer:
+      - S1617319352.279208,VS0,VS0,VE204
+      vary:
+      - Accept-Encoding
+      strict-transport-security:
+      - max-age=300
+    body:
+      encoding: ASCII-8BIT
+      string: '{"streams":[{"_id":41233703357,"game":"Outriders","broadcast_platform":"live","community_id":"","community_ids":[],"viewers":463,"video_height":1080,"average_fps":60,"delay":0,"created_at":"2021-03-31T01:48:26Z","is_playlist":false,"stream_type":"live","preview":{"small":"https://static-cdn.jtvnw.net/previews-ttv/live_user_streamerhouse-80x45.jpg","medium":"https://static-cdn.jtvnw.net/previews-ttv/live_user_streamerhouse-320x180.jpg","large":"https://static-cdn.jtvnw.net/previews-ttv/live_user_streamerhouse-640x360.jpg","template":"https://static-cdn.jtvnw.net/previews-ttv/live_user_streamerhouse-{width}x{height}.jpg"},"channel":{"mature":false,"status":"Live
+        Fast Eat Ash // Ambassador Access // TY Square! - 24/7 Live since 2013","broadcaster_language":"en","broadcaster_software":"","display_name":"StreamerHouse","game":"Outriders","language":"en","_id":44741426,"name":"streamerhouse","created_at":"2013-06-14T15:50:41.377211Z","updated_at":"2021-04-01T22:50:37.6997Z","partner":true,"logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/22bdb876-0fae-4d40-99c8-02fe30de9d47-profile_image-300x300.png","video_banner":"https://static-cdn.jtvnw.net/jtv_user_pictures/streamerhouse-channel_offline_image-643a63b6ee788b02-1920x1080.jpeg","profile_banner":"https://static-cdn.jtvnw.net/jtv_user_pictures/adc618bf-05cf-4b8c-acc6-bc7625cb20d9-profile_banner-480.png","profile_banner_background_color":"#ffffff","url":"https://www.twitch.tv/streamerhouse","views":59848048,"followers":633634,"broadcaster_type":"","description":"Twitch''s
+        Only Live 24/7 Gaming House!  http://Facebook.com/StreamerHouse http://Youtube.com/StreamerHouse","private_video":false,"privacy_options_enabled":false}}]}'
+  recorded_at: Thu, 01 Apr 2021 23:22:32 GMT
+- request:
+    method: get
+    uri: https://api.twitch.tv/kraken/streams/followed
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.twitchtv.v5+json
+      User-Agent:
+      - Faraday v1.3.0
+      Client-ID:
+      - "<CLIENT_ID>"
+      Authorization:
+      - OAuth <OUTDATED_ACCESS_TOKEN>
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '69'
+      content-type:
+      - application/json; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - no-cache, no-store, must-revalidate, private
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      timing-allow-origin:
+      - https://www.twitch.tv
+      date:
+      - Thu, 01 Apr 2021 23:22:32 GMT
+      x-served-by:
+      - cache-sea4468-SEA, cache-bma1648-BMA
+      x-cache:
+      - MISS, MISS
+      x-cache-hits:
+      - 0, 0
+      x-timer:
+      - S1617319353.583606,VS0,VS0,VE165
+      vary:
+      - Accept-Encoding
+      strict-transport-security:
+      - max-age=300
+    body:
+      encoding: UTF-8
+      string: '{"error":"Unauthorized","status":401,"message":"invalid oauth token"}'
+  recorded_at: Thu, 01 Apr 2021 23:22:32 GMT
+- request:
+    method: get
+    uri: https://api.twitch.tv/kraken/streams/followed
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.twitchtv.v5+json
+      User-Agent:
+      - Faraday v1.3.0
+      Client-ID:
+      - "<CLIENT_ID>"
+      Authorization:
+      - OAuth <NEW_ACCESS_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '800'
+      content-type:
+      - application/json; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - no-cache, no-store, must-revalidate, private
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      timing-allow-origin:
+      - https://www.twitch.tv
+      date:
+      - Thu, 01 Apr 2021 23:22:33 GMT
+      x-served-by:
+      - cache-sea4450-SEA, cache-bma1631-BMA
+      x-cache:
+      - MISS, MISS
+      x-cache-hits:
+      - 0, 0
+      x-timer:
+      - S1617319353.849384,VS0,VS0,VE185
+      vary:
+      - Accept-Encoding
+      strict-transport-security:
+      - max-age=300
+    body:
+      encoding: ASCII-8BIT
+      string: '{"streams":[{"_id":41233703357,"game":"Outriders","broadcast_platform":"live","community_id":"","community_ids":[],"viewers":463,"video_height":1080,"average_fps":60,"delay":0,"created_at":"2021-03-31T01:48:26Z","is_playlist":false,"stream_type":"live","preview":{"small":"https://static-cdn.jtvnw.net/previews-ttv/live_user_streamerhouse-80x45.jpg","medium":"https://static-cdn.jtvnw.net/previews-ttv/live_user_streamerhouse-320x180.jpg","large":"https://static-cdn.jtvnw.net/previews-ttv/live_user_streamerhouse-640x360.jpg","template":"https://static-cdn.jtvnw.net/previews-ttv/live_user_streamerhouse-{width}x{height}.jpg"},"channel":{"mature":false,"status":"Live
+        Fast Eat Ash // Ambassador Access // TY Square! - 24/7 Live since 2013","broadcaster_language":"en","broadcaster_software":"","display_name":"StreamerHouse","game":"Outriders","language":"en","_id":44741426,"name":"streamerhouse","created_at":"2013-06-14T15:50:41.377211Z","updated_at":"2021-04-01T22:50:37.6997Z","partner":true,"logo":"https://static-cdn.jtvnw.net/jtv_user_pictures/22bdb876-0fae-4d40-99c8-02fe30de9d47-profile_image-300x300.png","video_banner":"https://static-cdn.jtvnw.net/jtv_user_pictures/streamerhouse-channel_offline_image-643a63b6ee788b02-1920x1080.jpeg","profile_banner":"https://static-cdn.jtvnw.net/jtv_user_pictures/adc618bf-05cf-4b8c-acc6-bc7625cb20d9-profile_banner-480.png","profile_banner_background_color":"#ffffff","url":"https://www.twitch.tv/streamerhouse","views":59848048,"followers":633634,"broadcaster_type":"","description":"Twitch''s
+        Only Live 24/7 Gaming House!  http://Facebook.com/StreamerHouse http://Youtube.com/StreamerHouse","private_video":false,"privacy_options_enabled":false}}]}'
+  recorded_at: Thu, 01 Apr 2021 23:22:33 GMT
+recorded_with: VCR 6.0.0

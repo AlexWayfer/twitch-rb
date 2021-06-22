@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'faraday', '~> 1.0'
   s.add_runtime_dependency 'faraday_middleware', '~> 1.0'
   s.add_runtime_dependency 'retriable', '~> 3.0'
-  s.add_runtime_dependency 'twitch_oauth2', '~> 0.2.0'
+  s.add_runtime_dependency 'twitch_oauth2', '~> 0.4.0'
 
   s.add_development_dependency 'pry-byebug', '~> 3.9'
   s.add_development_dependency 'rspec', '~> 3.9'
